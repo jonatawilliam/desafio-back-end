@@ -20,6 +20,7 @@ Jonata William
 * [Avaliação](#Avaliação)
 * [Referência](#Referência)
 * [Testar](#Testar)
+  - [QuickStart](#QuickStart)
   - [Docker](#Docker)
   - [Local](#Local)
 
@@ -109,6 +110,19 @@ Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/da
 Boa sorte!
 
 ### Testar
+
+
+#### QuickStart
+
+Faça o download e execute o arquivo [desafio-back-end-Jonata.sh](https://jw-github.s3.amazonaws.com/desafio-back-end-Jonata.sh) e siga as instruções
+```bash
+sh desafio-back-end-Jonata.sh
+```
+
+Ou execute este comando:
+```bash
+sh -c "$(curl -fsSL https://jw-github.s3.amazonaws.com/desafio-back-end-Jonata.sh)"
+```
 
 
 #### Docker
