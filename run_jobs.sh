@@ -1,1 +1,1 @@
-bundle exec sidekiq
+sidekiq

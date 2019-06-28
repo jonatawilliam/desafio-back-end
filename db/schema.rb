@@ -10,10 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_27_160226) do
+ActiveRecord::Schema.define(version: 2019_06_27_203504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "financial_movements", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "type_transaction_id", null: false
+    t.datetime "date_occurrency", null: false
+    t.decimal "value", precision: 15, scale: 2, null: false
+    t.string "cpf", null: false
+    t.string "card", null: false
+    t.string "store_owner", null: false
+    t.string "store_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type_transaction_id"], name: "index_financial_movements_on_type_transaction_id"
+    t.index ["user_id"], name: "index_financial_movements_on_user_id"
+  end
+
+  create_table "type_transactions", force: :cascade do |t|
+    t.string "description", null: false
+    t.string "nature", null: false
+    t.boolean "signal"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -37,4 +60,6 @@ ActiveRecord::Schema.define(version: 2019_06_27_160226) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "financial_movements", "type_transactions"
+  add_foreign_key "financial_movements", "users"
 end

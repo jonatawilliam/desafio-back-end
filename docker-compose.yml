@@ -32,7 +32,7 @@ services:
       - "redis"
       - "rails_app"
     build: .
-    command: bash run_jobs.sh
+    command: bash sidekiq
     volumes:
       - .:/desafio-back-end
 

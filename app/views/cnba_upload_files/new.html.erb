@@ -1,0 +1,16 @@
+</div><div class="notice">
+  <br>
+  <%= notice %>
+  <br>
+</div>
+<div class="container">
+  <div class="box">
+    <%= form_for @cnba_file, multipart: true do |f| %>
+      Arquivo CNBA
+      <%= f.file_field :cnba_file %>
+      <%= f.submit "Enviar" %>
+    <% end %>
+    <br>
+    <h3><%= link_to "Voltar", root_path%></h3>
+  </div>
+</div>
