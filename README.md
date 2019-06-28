@@ -1,4 +1,31 @@
-# Desafio programação - para vaga Back-end
+
+
+
+
+
+
+# BLU - Desafio Back End 
+
+Jonata William
+
+
+## Sumário
+
+* [Introdução](#Introdução)
+  - [Desafio](#Desafio)
+  - [Instruções](#Instruções)
+  - [Descrição](#Descrição)
+* [CNAB](#CNAB)
+* [Transações](#Transações)
+* [Avaliação](#Avaliação)
+* [Referência](#Referência)
+* [Testar](#Testar)
+  - [Docker](#Docker)
+  - [Local](#Local)
+
+## Introdução
+
+### Desafio
 
 Por favor leiam este documento do começo ao fim, com muita atenção.
 O intuito deste teste é avaliar seus conhecimentos técnicos com o back-end, para ser mais específico em Ruby.
@@ -7,13 +34,13 @@ O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/Pag
 
 Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
 
-# Instruções de entrega do desafio
+### Instruções
 
 1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
 2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
 3. Por fim, envie via email um arquivo patch para seu contato na BLU.
 
-# Descrição do projeto
+### Descrição
 
 Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
 Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
@@ -33,7 +60,8 @@ Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https:
 1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
 2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
 
-# Documentação do CNAB
+## CNAB
+### Documentação do CNAB
 
 | Descrição do campo  | Inicio | Fim | Tamanho | Comentário
 | ------------- | ------------- | -----| ---- | ------
@@ -46,7 +74,8 @@ Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https:
 | Dono da loja | 49 | 62 | 14 | Nome do representante da loja
 | Nome loja | 63 | 81 | 19 | Nome da loja
 
-# Documentação sobre os tipos das transações
+## Transações
+### Documentação sobre os tipos das transações
 
 | Tipo | Descrição | Natureza | Sinal |
 | ---- | -------- | --------- | ----- |
@@ -60,7 +89,7 @@ Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https:
 | 8 | Recebimento DOC | Entrada | + |
 | 9 | Aluguel | Saída | - |
 
-# Avaliação
+## Avaliação
 
 Seu projeto será avaliado de acordo com os seguintes critérios.
 
@@ -71,10 +100,107 @@ Seu projeto será avaliado de acordo com os seguintes critérios.
 
 Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
 
-# Referência
+## Referência
 
 Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
 
 ---
 
 Boa sorte!
+
+### Testar
+
+
+#### Docker
+
+Se você não tiver o Docker no computador, siga as instruções de instalação no Docker, Github([mais informações aqui](https://github.com/docker/docker-install)).
+
+Clone o projeto no diretório de sua escolha.
+```bash
+git clone https://github.com/jonatawilliam/desafio-back-end
+cd your-project-name
+```
+
+Execute o comando do Docker para compilação e executar a aplicação.
+```bash
+docker-compose up --build -V
+```
+
+Acesse a aplicação em:
+
+http://localhost:3000(http://localhost:3000)
+
+
+
+#### Local
+
+- Instale a versão 2.6.3 do ruby e configure-a com o seu gerenciador de ambiente ruby ([mais informações aqui](https://www.ruby-lang.org/en/documentation/installation/)).
+- Instale o PostgresSQL e inicie o servidor PostgresSQL em primeiro plano ([mais informações aqui](https://wiki.postgresql.org/wiki/Detailed_installation_guides)).
+- Clone o repositório e acesse o diretório clonado:
+
+```bash
+git clone https://github.com/jonatawilliam/desafio-back-end
+cd nome-do-seu-projeto
+```
+
+- Alterar o arquivo 'database.yml' conforme abaixo:
+
+Atual
+```yaml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: database
+  username: postgres
+development:
+  <<: *default
+  database: desafio-back-end_development
+test:
+  <<: *default
+  database: desafio-back-end_test
+production:
+  <<: *default
+  database: desafio-back-end_production
+  username: desafio-back-end
+  password: <%= ENV['DESAFIO-BACK-END_DATABASE_PASSWORD'] %>
+
+```
+
+Modificado
+```yaml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+development:
+  <<: *default
+  database: desafio-back-end_development
+test:
+  <<: *default
+  database: desafio-back-end_test
+production:
+  <<: *default
+  database: desafio-back-end_production
+  username: desafio-back-end
+  password: <%= ENV['DESAFIO-BACK-END_DATABASE_PASSWORD'] %>
+
+```
+
+- Executar os comando no diretório do projeto:
+
+Baixar e atualizar as gems: 
+```bash
+bundle install
+```
+
+Criar banco de dados, suas migartes e inserir os tipos de transações: 
+```bash
+rake db:create cd:migrate db:seed
+```
+
+Inicializar servidor Puma: 
+```bash
+rails s
+```

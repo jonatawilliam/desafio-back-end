@@ -8,7 +8,7 @@ class CnbaUploadFilesController < ApplicationController
     cnba_file = CnbaUploadFile.new(cnba_file_params)
     if cnba_file.valid?
       cnba_file_string = File.read(cnba_file_params[:cnba_file].path)
-      CnbaService.new(cnba_file_params[:user][:id], cnba_file_string).execute
+      CnabJob.perform_now(cnba_file_params[:user][:id], cnba_file_string)
       redirect_to root_path, notice: "Movimentação Financeira inserida na base de dados! "
     else
       redirect_to new_cnba_upload_file_path, notice: "Extensão inválida para upload CNBA "

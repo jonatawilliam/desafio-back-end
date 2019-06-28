@@ -1,10 +1,23 @@
 version: '3'
 
 services:
-  database:
+  database_app:
     image: 'postgres:9.5'
     volumes:
       - 'postgres:/var/lib/postgresql/data'
+
+  rails_app:
+      depends_on:
+        - 'database_app'
+      build: .
+      command: bash run_server.sh
+      stdin_open: true
+      tty: true
+      ports:
+        - '3000:3000'
+      volumes:
+        - '.:/desafio-back-end'
+        - gems:/gems
   
   redis:
     image: "redis:5.0.5-alpine"
@@ -14,21 +27,9 @@ services:
     volumes:
       - redis:/var/lib/redis/data
 
-  rails_app:
-    depends_on:
-      - 'database'
-    build: .
-    command: bash run_server.sh
-    stdin_open: true
-    tty: true
-    ports:
-      - '3000:3000'
-    volumes:
-      - '.:/desafio-back-end'
-
   jobs:
     depends_on:
-      - "database"
+      - "database_app"
       - "redis"
       - "rails_app"
     build: .
@@ -37,5 +38,6 @@ services:
       - .:/desafio-back-end
 
 volumes:
-  redis:
   postgres:
+  gems:
+  redis:

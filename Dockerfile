@@ -8,5 +8,8 @@ ENV INSTALL_PATH /desafio-back-end
 RUN mkdir -p $INSTALL_PATH
 WORKDIR $INSTALL_PATH
 ENV BUNDLE_PATH /gems
+COPY Gemfile Gemfile.lock ./
+ENV BUNDLER_VERSION 2.0.1
+RUN gem install bundler && bundle install --jobs 20 --retry 5
 COPY . .
 
